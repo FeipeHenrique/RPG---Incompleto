@@ -1,23 +1,30 @@
-import os, json
-from capitulos.cap1 import cap1
+import sys
+sys.dont_write_bytecode = True # isso faz com que pare de aparecer aquelas pastas "py__pycache_" 
 
-def limpar():
-    os.system('cls' if os.name == 'nt' else 'clear')
-with open("save/save.json", "r", encoding="utf-8") as arquivo:
-    dados = json.load(arquivo)
+from util import *
+from save import continuar, comecar
+from capitulos.cap1 import cap1
+from capitulos.cap2 import cap2
+
 
 while True:
     limpar()
-    print('Menu')
-    print('1. Jogar!\n2. Começar!')
-    c = int(input('>>'))
+    print("Menu")
+    print("1. Continuar\n2. Novo Jogo\n3. Sair")
+
+    c = int(input(">> "))
     if c == 1:
-        if dados["capitulo"] == 1:
-            cap1()
-            break
-        else: 
-            print('Arquivo não encontrado')
+        capitulo = continuar()
+    elif c == 2:
+        capitulo = comecar()
+    elif c == 3:
+        print("Saindo...")
+        break
     else:
-        dados["capitulo"] = 1
-        with open("save/save.json", "w", encoding="utf-8") as arquivo:
-            json.dump(dados, arquivo, indent=4)
+        continue
+
+    if capitulo == 1:
+        cap1()
+    elif capitulo == 2:
+        cap2()
+    break
